@@ -25,6 +25,10 @@ pub fn read_input(test: bool, year: u16, day: u8) -> anyhow::Result<Vec<String>>
             )
             .send()?
             .text()?
+        /*let mut buf = String::new();
+        let mut file = std::fs::File::open("input.txt")?;
+        file.read_to_string(&mut buf)?;
+        buf*/
     };
     Ok(buf
         .trim_end()
