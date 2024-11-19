@@ -46,5 +46,6 @@ pub fn read_input(test: bool, year: u16, day: u8) -> anyhow::Result<Vec<String>>
         .trim_end()
         .split('\n')
         .map(|x| x.to_owned())
+        .filter(|x| !x.trim().is_empty())
         .collect::<Vec<_>>())
 }
