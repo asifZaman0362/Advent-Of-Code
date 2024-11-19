@@ -21,6 +21,6 @@ fn main() -> anyhow::Result<()> {
 fn test() -> anyhow::Result<()> {
     let input = read_input(true, YEAR, DAY)?;
     let sol = Solver::solve(&input);
-    assert_eq!(sol, (10605, 0));
+    assert_eq!(sol, (10605, 2713310158));
     Ok(())
 }
