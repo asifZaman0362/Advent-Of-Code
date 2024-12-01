@@ -8,3 +8,4 @@ pub trait Solution {
 pub mod _2020;
 pub mod _2021;
 pub mod _2022;
+pub mod _2024;
