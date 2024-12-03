@@ -18,7 +18,6 @@ fn check(vec: &[i32]) -> bool {
         }
         let val = diff.abs();
         if sign != _sign || !(1..=3).contains(&val) {
-            //println!("{sign} {_sign} {val} {prev} {section}");
             safe = false;
             break;
         }
