@@ -3,10 +3,7 @@ use regex;
 
 pub struct Solver;
 
-fn part1(input: &Input) -> i64 {
-    calculate(input.join(" ").as_str())
-}
-
+// aka part1 lol
 fn calculate(input: &str) -> i64 {
     let re = regex::Regex::new(r"mul\(([0-9]+),([0-9]+)\)").unwrap();
     re.captures_iter(input)
@@ -14,10 +11,9 @@ fn calculate(input: &str) -> i64 {
         .fold(0, |prev, (_, [a, b])| prev + i64_p(a) * i64_p(b))
 }
 
-fn part2(input: &Input) -> i64 {
-    let full = input.join("\n");
+fn part2(input: &str) -> i64 {
     let mut sum = 0;
-    let mut remaining = full.as_str();
+    let mut remaining = input;
     while let Some((enabled, rest)) = remaining.split_once("don't()") {
         sum += calculate(enabled);
         remaining = rest.split_once("do()").map_or("", |(_, next)| next);
@@ -28,6 +24,7 @@ fn part2(input: &Input) -> i64 {
 impl Solution for Solver {
     type Answer = i64;
     fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        (part1(&input), part2(&input))
+        let input = input.join(" ");
+        (calculate(&input), part2(&input))
     }
 }
