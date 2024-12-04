@@ -29,6 +29,16 @@ pub fn f32_p(x: &str) -> f32 {
     x.parse::<f32>().unwrap()
 }
 
+pub fn next(x: usize, dx: isize, i: usize) -> Option<usize> {
+    if dx.signum() == -1 {
+        let dx: usize = (-dx).try_into().unwrap();
+        x.checked_sub(dx * (i + 1))
+    } else {
+        let dx: usize = (dx).try_into().unwrap();
+        x.checked_add(dx * (i + 1))
+    }
+}
+
 pub mod _2020;
 pub mod _2021;
 pub mod _2022;
