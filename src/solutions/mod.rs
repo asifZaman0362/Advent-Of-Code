@@ -3,6 +3,8 @@ pub type Input<'a> = &'a Vec<String>;
 pub use std::cmp::Ordering;
 pub use std::collections::{HashMap, HashSet};
 
+pub type Grid<'a> = &'a [&'a [u8]];
+
 pub trait Solution {
     type Answer: std::fmt::Display + std::fmt::Debug;
     fn solve(input: Input) -> (Self::Answer, Self::Answer);
@@ -40,6 +42,19 @@ pub fn next(x: usize, dx: isize, i: usize) -> Option<usize> {
         let dx: usize = (dx).try_into().unwrap();
         x.checked_add(dx * (i + 1))
     }
+}
+
+pub fn next_mut(x: &mut usize, dx: isize) -> Option<usize> {
+    (if dx.signum() == -1 {
+        let dx: usize = (-dx).try_into().unwrap();
+        x.checked_sub(dx)
+    } else {
+        let dx: usize = (dx).try_into().unwrap();
+        x.checked_add(dx)
+    })
+    .inspect(|new| {
+        *x = *new;
+    })
 }
 
 pub mod _2020;
