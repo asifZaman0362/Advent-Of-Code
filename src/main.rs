@@ -3,12 +3,12 @@ use input::read_input;
 use std::collections::HashMap;
 
 use solutions::Solution;
-type Solver = solutions::_2015::day2::Solver;
+type Solver = solutions::_2015::day5::Solver;
 
 mod solutions;
 
 const YEAR: u16 = 2015;
-const DAY: u8 = 2;
+const DAY: u8 = 5;
 
 fn main() -> anyhow::Result<()> {
     let begin = std::time::Instant::now();
@@ -25,8 +25,8 @@ fn main() -> anyhow::Result<()> {
 fn test() -> anyhow::Result<()> {
     let begin = std::time::Instant::now();
     let input = read_input(true, YEAR, DAY)?;
-    let sol = Solver::solve(&input);
-    assert_eq!(sol, (58 + 43, 34 + 14));
+    //let sol = Solver::solve(&input);
+    //assert_eq!(sol, (0, 0));
     let end = std::time::Instant::now();
     let time = end.duration_since(begin);
     dbg!(time);
