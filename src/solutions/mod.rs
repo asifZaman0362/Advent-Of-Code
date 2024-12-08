@@ -15,6 +15,10 @@ pub fn u64_p(x: &str) -> u64 {
     x.parse::<u64>().unwrap()
 }
 
+pub fn usize_p(x: &str) -> usize {
+    x.parse::<usize>().unwrap()
+}
+
 pub fn i64_p(x: &str) -> i64 {
     x.parse::<i64>().unwrap()
 }
