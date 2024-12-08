@@ -4,6 +4,7 @@ pub use std::cmp::Ordering;
 pub use std::collections::{HashMap, HashSet};
 
 pub type Grid<'a> = &'a [&'a [u8]];
+pub type Pos = (isize, isize);
 
 pub trait Solution {
     type Answer: std::fmt::Display + std::fmt::Debug;
