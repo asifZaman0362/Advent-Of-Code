@@ -61,16 +61,6 @@ impl Solution for Solver {
                 }
             }
         }
-        /*for (y, line) in input.iter().enumerate() {
-            for (x, char) in line.chars().enumerate() {
-                if antinodes.contains(&(x as isize, y as isize)) {
-                    print!("#");
-                } else {
-                    print!("{char}");
-                }
-            }
-            println!();
-        }*/
         (antinodes.len(), antinodes_2.len())
     }
 }
