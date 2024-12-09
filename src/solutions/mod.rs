@@ -39,6 +39,11 @@ pub fn f32_p(x: &str) -> f32 {
     x.parse::<f32>().unwrap()
 }
 
+pub fn sorted<T: std::cmp::Ord>(vec: &mut Vec<T>) -> impl std::iter::Iterator<Item = &mut T> {
+    vec.sort();
+    vec.iter_mut()
+}
+
 pub fn next(x: usize, dx: isize, i: usize) -> Option<usize> {
     if dx.signum() == -1 {
         let dx: usize = (-dx).try_into().unwrap();
@@ -60,6 +65,32 @@ pub fn next_mut(x: &mut usize, dx: isize) -> Option<usize> {
     .inspect(|new| {
         *x = *new;
     })
+}
+
+pub trait Sorted<T: std::cmp::Ord> {
+    fn sorted<'a>(&'a mut self) -> impl std::iter::Iterator<Item = &'a T>
+    where
+        T: 'a;
+    fn sorted_mut<'a>(&'a mut self) -> impl std::iter::Iterator<Item = &'a mut T>
+    where
+        T: 'a;
+}
+
+impl<T: std::cmp::Ord> Sorted<T> for Vec<T> {
+    fn sorted<'a>(&'a mut self) -> impl std::iter::Iterator<Item = &'a T>
+    where
+        T: 'a,
+    {
+        self.sort();
+        self.iter()
+    }
+    fn sorted_mut<'a>(&'a mut self) -> impl std::iter::Iterator<Item = &'a mut T>
+    where
+        T: 'a,
+    {
+        self.sort();
+        self.iter_mut()
+    }
 }
 
 pub mod _2015;
