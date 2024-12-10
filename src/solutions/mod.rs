@@ -6,6 +6,145 @@ pub use std::collections::{HashMap, HashSet};
 pub type Grid<'a> = &'a [&'a [u8]];
 pub type Pos = (isize, isize);
 
+pub trait Number:
+    std::ops::Add
+    + std::ops::Sub
+    + std::ops::Div
+    + std::ops::Mul
+    + std::ops::AddAssign
+    + std::ops::SubAssign
+    + std::ops::DivAssign
+    + std::ops::MulAssign
+    + std::cmp::PartialOrd
+    + std::cmp::PartialEq
+    + Sized
+{
+}
+
+impl Number for usize {}
+impl Number for isize {}
+impl Number for u32 {}
+impl Number for i32 {}
+impl Number for f32 {}
+impl Number for u64 {}
+impl Number for i64 {}
+impl Number for u16 {}
+impl Number for i16 {}
+impl Number for u8 {}
+impl Number for i8 {}
+
+#[derive(Eq, PartialEq)]
+pub struct Vec2<T: Number> {
+    x: T,
+    y: T,
+}
+
+impl<T: Number> From<(T, T)> for Vec2<T> {
+    fn from((x, y): (T, T)) -> Self {
+        Self { x, y }
+    }
+}
+
+impl<T: Number> std::ops::Add<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Add>::Output: Number,
+{
+    type Output = Vec2<<T as std::ops::Add>::Output>;
+    fn add(self, rhs: Vec2<T>) -> Self::Output {
+        Vec2::from((self.x + rhs.x, self.y + rhs.y))
+    }
+}
+
+impl<T: Number> std::ops::Sub<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Sub>::Output: Number,
+{
+    type Output = Vec2<<T as std::ops::Sub>::Output>;
+    fn sub(self, rhs: Vec2<T>) -> Self::Output {
+        Vec2::from((self.x - rhs.x, self.y - rhs.y))
+    }
+}
+
+impl<T: Number> std::ops::Mul<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Mul>::Output: Number,
+{
+    type Output = Vec2<<T as std::ops::Mul>::Output>;
+    fn mul(self, rhs: Vec2<T>) -> Self::Output {
+        Vec2::from((self.x * rhs.x, self.y * rhs.y))
+    }
+}
+
+impl<T: Number> std::ops::Div<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Div>::Output: Number,
+{
+    type Output = Vec2<<T as std::ops::Div>::Output>;
+    fn div(self, rhs: Vec2<T>) -> Self::Output {
+        Vec2::from((self.x / rhs.x, self.y / rhs.y))
+    }
+}
+
+impl<T: Number> std::ops::AddAssign<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Add>::Output: Number,
+{
+    fn add_assign(&mut self, rhs: Vec2<T>) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
+impl<T: Number> std::ops::SubAssign<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Sub>::Output: Number,
+{
+    fn sub_assign(&mut self, rhs: Vec2<T>) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+    }
+}
+
+impl<T: Number> std::ops::MulAssign<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Mul>::Output: Number,
+{
+    fn mul_assign(&mut self, rhs: Vec2<T>) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
+    }
+}
+
+impl<T: Number> std::ops::DivAssign<Vec2<T>> for Vec2<T>
+where
+    <T as std::ops::Div>::Output: Number,
+{
+    fn div_assign(&mut self, rhs: Vec2<T>) {
+        self.x /= rhs.x;
+        self.y /= rhs.y;
+    }
+}
+
+impl<T: Number + Copy> std::ops::DivAssign<T> for Vec2<T>
+where
+    <T as std::ops::Div>::Output: Number,
+{
+    fn div_assign(&mut self, rhs: T) {
+        self.x /= rhs;
+        self.y /= rhs;
+    }
+}
+
+impl<T: Number + Copy> std::ops::Div<T> for Vec2<T>
+where
+    <T as std::ops::Div>::Output: Number,
+{
+    type Output = Vec2<<T as std::ops::Div>::Output>;
+    fn div(self, rhs: T) -> Self::Output {
+        Vec2::from((self.x / rhs, self.y / rhs))
+    }
+}
+
 pub trait Solution {
     type Answer: std::fmt::Display + std::fmt::Debug;
     fn solve(input: Input) -> (Self::Answer, Self::Answer);

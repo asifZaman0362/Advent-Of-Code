@@ -50,7 +50,7 @@ pub fn solution(input: TokenStream) -> TokenStream {
     let expanded = quote! {
         pub struct #struct_name;
 
-        impl Solution for #struct_name {
+        impl solutions::Solution for #struct_name {
             type Answer = #answer_type;
 
             fn solve(input: Input) -> (Self::Answer, Self::Answer) {
