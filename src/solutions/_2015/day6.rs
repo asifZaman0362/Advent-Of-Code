@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 enum Op {
     On,
@@ -49,39 +49,40 @@ fn count_on(lights: &[[u8; 1000]], lights2: &[[u8; 1000]]) -> (usize, usize) {
     (count1, count2)
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let mut lights = [[0u8; 1000]; 1000];
-        let mut lights2 = [[0u8; 1000]; 1000];
-        for instruction in input {
-            let (op, rest) = if let Some(rest) = instruction.strip_prefix("turn on ") {
-                (Op::On, rest)
-            } else if let Some(rest) = instruction.strip_prefix("turn off ") {
-                (Op::Off, rest)
-            } else if let Some(rest) = instruction.strip_prefix("toggle ") {
-                (Op::Toggle, rest)
-            } else {
-                panic!("invalid instruction: {instruction}");
-            };
-            if let Some((start, end)) = rest.split_once(" through ") {
-                let start = start
-                    .split_once(",")
-                    .map(|(x, y)| {
-                        //println!("{x} {y}");
-                        (usize_p(x), usize_p(y))
-                    })
-                    .unwrap();
-                let end = end
-                    .split_once(",")
-                    .map(|(x, y)| {
-                        //println!("{x} {y}");
-                        (usize_p(x), usize_p(y))
-                    })
-                    .unwrap();
-                update_lights(start, end, op, &mut lights, &mut lights2);
-            }
+//impl Solution for Solver {
+//type Answer = usize;
+//fn solve(input: Input) -> (Self::Answer, Self::Answer) {
+r#macro::solution!(2015, 6, usize, {
+    let mut lights = [[0u8; 1000]; 1000];
+    let mut lights2 = [[0u8; 1000]; 1000];
+    for instruction in input.split('\n') {
+        let (op, rest) = if let Some(rest) = instruction.strip_prefix("turn on ") {
+            (Op::On, rest)
+        } else if let Some(rest) = instruction.strip_prefix("turn off ") {
+            (Op::Off, rest)
+        } else if let Some(rest) = instruction.strip_prefix("toggle ") {
+            (Op::Toggle, rest)
+        } else {
+            panic!("invalid instruction: {instruction}");
+        };
+        if let Some((start, end)) = rest.split_once(" through ") {
+            let start = start
+                .split_once(",")
+                .map(|(x, y)| {
+                    //println!("{x} {y}");
+                    (usize_p(x), usize_p(y))
+                })
+                .unwrap();
+            let end = end
+                .split_once(",")
+                .map(|(x, y)| {
+                    //println!("{x} {y}");
+                    (usize_p(x), usize_p(y))
+                })
+                .unwrap();
+            update_lights(start, end, op, &mut lights, &mut lights2);
         }
-        count_on(&lights, &lights2)
     }
-}
+    count_on(&lights, &lights2)
+});
+//}

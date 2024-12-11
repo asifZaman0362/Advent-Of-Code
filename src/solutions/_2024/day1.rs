@@ -1,10 +1,10 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 fn solve0(input: &crate::solutions::Input) -> i32 {
     let (mut left, mut right): (Vec<_>, Vec<_>) = input
-        .iter()
+        .lines()
         .map(|line| {
             line.split_once("   ")
                 .map(|(a, b)| (i32_p(a), i32_p(b)))
@@ -20,7 +20,7 @@ fn solve0(input: &crate::solutions::Input) -> i32 {
 fn solve1(input: crate::solutions::Input) -> i32 {
     let mut cts = [0u16; 100_000];
     input
-        .iter()
+        .lines()
         .map(|l| {
             l.split_once("   ")
                 .map(|(x, y)| {
@@ -35,9 +35,10 @@ fn solve1(input: crate::solutions::Input) -> i32 {
         .sum()
 }
 
-impl Solution for Solver {
+r#macro::solution!(2024, 1, i32, (solve0(&input), solve1(input)));
+/*impl Solution for Solver {
     type Answer = i32;
     fn solve(input: crate::solutions::Input) -> (Self::Answer, Self::Answer) {
         (solve0(&input), solve1(input))
     }
-}
+}*/

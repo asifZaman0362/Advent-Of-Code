@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 // Behold... THE POWER TOWER!!!!!!!!!!!!!!!!
 const POWERS: &[i64] = &[
@@ -128,7 +128,7 @@ fn check_solution(result: Num, ops: &[Num]) -> (bool, bool) {
 fn solve0(input: Input) -> (i64, i64) {
     let mut sum1: Num = Num::from("0");
     let mut sum2: Num = Num::from("0");
-    for line in input {
+    for line in input.lines() {
         if let Some((result, mut ops)) = line.split_once(":").map(|(res, ops)| {
             (
                 Num::from(res),
@@ -150,9 +150,7 @@ fn solve0(input: Input) -> (i64, i64) {
     (sum1.num, sum1.num + sum2.num)
 }
 
-impl Solution for Solver {
-    type Answer = i64;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        solve0(input)
-    }
-}
+/*impl Solution for Solver {
+type Answer = i64;
+fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 7, i64, solve0(input));

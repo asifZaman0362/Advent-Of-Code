@@ -1,7 +1,7 @@
 use crate::solutions::{i64_p, Input, Solution};
 use regex;
 
-pub struct Solver;
+//pub struct Solver;
 
 // aka part1 lol
 fn calculate(input: &str) -> i64 {
@@ -20,11 +20,12 @@ fn part2(input: &str) -> i64 {
     }
     sum + calculate(remaining)
 }
+/*
 
 impl Solution for Solver {
     type Answer = i64;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let input = input.join(" ");
-        (calculate(&input), part2(&input))
-    }
-}
+    fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 3, i64, {
+    //let input = input.replace('\n', " ");
+    (calculate(&input), part2(&input))
+});

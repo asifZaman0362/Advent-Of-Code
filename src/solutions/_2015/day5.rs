@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 fn is_nice(string: &str) -> bool {
     let mut vowels = 0;
@@ -72,19 +72,20 @@ fn nice() {
     assert!(!is_even_nicer("ieodomkazucvgmuy"));
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let mut nice = HashSet::new();
-        let mut even_nicer = HashSet::new();
-        for string in input {
-            if is_nice(string) {
-                nice.insert(string);
-            }
-            if is_even_nicer(string) {
-                even_nicer.insert(string);
-            }
+//impl Solution for Solver {
+//type Answer = usize;
+//fn solve(input: Input) -> (Self::Answer, Self::Answer) {
+r#macro::solution!(2015, 5, usize, {
+    let mut nice = HashSet::new();
+    let mut even_nicer = HashSet::new();
+    for string in input.split('\n') {
+        if is_nice(string) {
+            nice.insert(string);
         }
-        (nice.len(), even_nicer.len())
+        if is_even_nicer(string) {
+            even_nicer.insert(string);
+        }
     }
-}
+    (nice.len(), even_nicer.len())
+});
+//}

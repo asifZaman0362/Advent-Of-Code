@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 fn draw(s: i32, xpos: i32) {
     if (s - 1..s + 2).contains(&xpos) {
@@ -27,7 +27,7 @@ fn solve0(input: Input) -> i32 {
     let mut xpos = 0;
     draw(X, xpos);
     xpos = inc(xpos);
-    for line in input {
+    for line in input.split('\n') {
         if line == "noop" {
             draw(X, xpos);
             history.push(X);
@@ -53,9 +53,11 @@ fn solve0(input: Input) -> i32 {
         .fold(0, |prev, (idx, val)| prev + (idx + 1) as i32 * val)
 }
 
-impl Solution for Solver {
+r#macro::solution!(2022, 10, i32, (solve0(input), -1));
+
+/*impl Solution for Solver {
     type Answer = i32;
     fn solve(input: Input) -> (Self::Answer, Self::Answer) {
         (solve0(input), -1)
     }
-}
+}*/

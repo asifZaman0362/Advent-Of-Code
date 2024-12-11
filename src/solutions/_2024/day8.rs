@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 fn next(a: &mut Pos, diff: &Pos, max: Pos) -> Option<Pos> {
     let res = (a.0 - diff.0, a.1 - diff.1);
@@ -33,34 +33,34 @@ fn compute_antinodes2(a: &Pos, b: &Pos, xmax: isize, ymax: isize) -> HashSet<Pos
     poss
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let mut map = HashMap::<char, Vec<Pos>>::new();
-        let mut antinodes = HashSet::new();
-        let mut antinodes_2 = HashSet::<Pos>::new();
-        let (xmax, ymax) = (input.len() as isize, input[0].len() as isize);
-        for (y, line) in input.iter().enumerate() {
-            for (x, freq) in line.chars().enumerate() {
-                if freq.is_alphanumeric() {
-                    let (x, y) = (x as isize, y as isize);
-                    if let Some(entry) = map.get_mut(&freq) {
-                        for other in &*entry {
-                            compute_antinode_pos(&(x, y), other, xmax, ymax).map(|x| {
-                                if let Some(x) = x {
-                                    antinodes.insert(x);
-                                }
-                            });
-                            antinodes_2
-                                .extend(compute_antinodes2(&(x, y), other, xmax, ymax).iter());
-                        }
-                        entry.push((x, y));
-                    } else {
-                        map.insert(freq, vec![(x, y)]);
+/*impl Solution for Solver {
+type Answer = usize;
+fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 8, usize, {
+    let input = input.lines().collect::<Vec<_>>();
+    let mut map = HashMap::<char, Vec<Pos>>::new();
+    let mut antinodes = HashSet::new();
+    let mut antinodes_2 = HashSet::<Pos>::new();
+    let (xmax, ymax) = (input.len() as isize, input[0].len() as isize);
+    for (y, line) in input.iter().enumerate() {
+        for (x, freq) in line.chars().enumerate() {
+            if freq.is_alphanumeric() {
+                let (x, y) = (x as isize, y as isize);
+                if let Some(entry) = map.get_mut(&freq) {
+                    for other in &*entry {
+                        compute_antinode_pos(&(x, y), other, xmax, ymax).map(|x| {
+                            if let Some(x) = x {
+                                antinodes.insert(x);
+                            }
+                        });
+                        antinodes_2.extend(compute_antinodes2(&(x, y), other, xmax, ymax).iter());
                     }
+                    entry.push((x, y));
+                } else {
+                    map.insert(freq, vec![(x, y)]);
                 }
             }
         }
-        (antinodes.len(), antinodes_2.len())
     }
-}
+    (antinodes.len(), antinodes_2.len())
+});

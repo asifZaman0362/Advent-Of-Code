@@ -1,4 +1,4 @@
-pub type Input<'a> = &'a Vec<String>;
+pub type Input<'a> = &'a str;
 
 pub use std::cmp::Ordering;
 pub use std::collections::{HashMap, HashSet};
@@ -148,6 +148,7 @@ where
 pub trait Solution {
     type Answer: std::fmt::Display + std::fmt::Debug;
     fn solve(input: Input) -> (Self::Answer, Self::Answer);
+    fn date() -> (u16, u8);
 }
 
 pub fn u64_p(x: &str) -> u64 {
@@ -230,6 +231,10 @@ impl<T: std::cmp::Ord> Sorted<T> for Vec<T> {
         self.sort();
         self.iter_mut()
     }
+}
+
+pub fn asst<T: PartialEq + std::fmt::Debug>(a: T, b: T) {
+    assert_eq!(a, b);
 }
 
 pub mod _2015;

@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 // This code is NOT meant to be readable. I wanted to challenge myself by writing as much of
 // the solution in a functional style as possible and hence the ugly code
@@ -71,10 +71,10 @@ fn solve0(input: &[&[u8]]) -> usize {
         .sum()
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let input = input.iter().map(|x| x.as_bytes()).collect::<Vec<_>>();
-        (solve0(&input), solve1(&input))
-    }
-}
+/*impl Solution for Solver {
+type Answer = usize;
+fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 4, usize, {
+    let input = input.lines().map(|x| x.as_bytes()).collect::<Vec<_>>();
+    (solve0(&input), solve1(&input))
+});

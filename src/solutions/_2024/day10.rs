@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 fn get_scores(
     buf: &[&mut [u8]],
@@ -39,23 +39,23 @@ fn get_scores(
     }
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let mut scores = Vec2::<usize>::from((0, 0));
-        let buf: Vec<&mut [u8]> = input
-            .iter()
-            .map(|l| l.bytes().collect::<Vec<_>>())
-            .map(|vec| vec.leak())
-            .collect();
-        for (y, line) in buf.iter().enumerate() {
-            for (x, &char) in line.iter().enumerate() {
-                if char == b'0' {
-                    let mut seen = HashSet::new();
-                    scores += get_scores(&buf, (x, y).into(), char - 1, &mut seen);
-                }
+/*impl Solution for Solver {
+type Answer = usize;
+fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 10, usize, {
+    let mut scores = Vec2::<usize>::from((0, 0));
+    let buf: Vec<&mut [u8]> = input
+        .lines()
+        .map(|l| l.bytes().collect::<Vec<_>>())
+        .map(|vec| vec.leak())
+        .collect();
+    for (y, line) in buf.iter().enumerate() {
+        for (x, &char) in line.iter().enumerate() {
+            if char == b'0' {
+                let mut seen = HashSet::new();
+                scores += get_scores(&buf, (x, y).into(), char - 1, &mut seen);
             }
         }
-        (scores.x, scores.y)
     }
-}
+    (scores.x, scores.y)
+});

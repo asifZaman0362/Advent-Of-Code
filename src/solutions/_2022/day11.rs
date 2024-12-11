@@ -1,7 +1,7 @@
 use crate::solutions::*;
 use std::collections::VecDeque;
 
-pub struct Solver;
+//pub struct Solver;
 
 #[derive(Clone)]
 enum Token {
@@ -34,7 +34,7 @@ fn evaluate(token: &Token, stress: u128) -> u128 {
 }
 
 impl Monkey {
-    fn new(block: &[String]) -> Self {
+    fn new(block: &[&str]) -> Self {
         let items = block[0]
             .split_once(':')
             .unwrap()
@@ -124,7 +124,7 @@ fn simulate_round(monkeys: &mut [Monkey], _mod: u128, div: u128) {
     }
 }
 
-fn solve0(input: Input) -> (u128, u128) {
+fn solve0(input: &Vec<&str>) -> (u128, u128) {
     let mut monkeys = vec![];
     let mut divisors = std::collections::HashSet::new();
     for block in input.windows(6).step_by(6) {
@@ -149,7 +149,7 @@ fn solve0(input: Input) -> (u128, u128) {
     )
 }
 
-impl Solution for Solver {
+/*impl Solution for Solver {
     type Answer = u128;
     fn solve(input: Input) -> (Self::Answer, Self::Answer) {
         let input = input
@@ -159,4 +159,12 @@ impl Solution for Solver {
             .collect::<Vec<String>>();
         solve0(&input)
     }
-}
+}*/
+r#macro::solution!(2022, 11, u128, {
+    let input = input
+        .split('\n')
+        .filter(|x| !x.trim().is_empty())
+        //.map(|x| x.to_owned())
+        .collect::<Vec<_>>();
+    solve0(&input)
+});

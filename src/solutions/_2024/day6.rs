@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 fn next_char(input: Grid, (x, y): Pos, (dx, dy): (isize, isize)) -> Option<(char, Pos)> {
     next(x, dx, 0).and_then(|x| {
@@ -82,10 +82,13 @@ fn solve0(input: Grid) -> (usize, usize) {
     (walkable.len(), loops)
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let input = input.iter().map(|line| line.as_bytes()).collect::<Vec<_>>();
-        solve0(&input)
-    }
-}
+/*impl Solution for Solver {
+type Answer = usize;
+fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 6, usize, {
+    let input = input
+        .lines()
+        .map(|line| line.as_bytes())
+        .collect::<Vec<_>>();
+    solve0(&input)
+});

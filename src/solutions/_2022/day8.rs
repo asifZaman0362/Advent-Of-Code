@@ -1,11 +1,9 @@
 use crate::solutions::*;
 use crate::Solution;
 
-pub struct Solver;
-
-fn solve1(input: Input) -> usize {
-    let line_len = input[0].len();
+fn solve1(input: &[&str]) -> usize {
     let tmatrix = input.iter().map(|x| x.as_bytes()).collect::<Vec<_>>();
+    let line_len = tmatrix[0].len();
     let mut vmatrix = vec![];
     let mut max = 0;
     for (y, &row) in tmatrix.iter().take(tmatrix.len() - 1).skip(1).enumerate() {
@@ -50,7 +48,7 @@ fn solve1(input: Input) -> usize {
     max
 }
 
-fn solve0(input: Input) -> usize {
+fn solve0(input: &[&str]) -> usize {
     let rows = input.len();
     let mut tallest_ltr_column: Vec<u8> = vec![];
     let mut matrix = vec![];
@@ -125,9 +123,7 @@ fn solve0(input: Input) -> usize {
         .fold(0, |prev, x| prev + x.iter().sum::<usize>())
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        (solve0(input), solve1(input))
-    }
-}
+r#macro::solution!(2022, 8, usize, {
+    let input = input.lines().collect::<Vec<_>>();
+    (solve0(&input), solve1(&input))
+});

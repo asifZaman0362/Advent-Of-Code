@@ -1,8 +1,9 @@
-use crate::Solution;
+//use crate::Solution;
+use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
-fn solve_0<'b>(numbers: &Vec<&'b String>, idx: usize, keep_less: bool) -> &'b String {
+fn solve_0<'b>(numbers: &Vec<&'b str>, idx: usize, keep_less: bool) -> &'b str {
     //dbg!(numbers);
     if numbers.len() == 1 {
         return numbers[0];
@@ -31,22 +32,23 @@ fn solve_0<'b>(numbers: &Vec<&'b String>, idx: usize, keep_less: bool) -> &'b St
     }
 }
 
-impl Solution for Solver {
-    type Answer = u32;
+//impl Solution for Solver {
+//type Answer = u32;
 
-    fn solve(input: crate::solutions::Input) -> (Self::Answer, Self::Answer) {
-        let input = input.iter().collect::<Vec<_>>();
-        let oxygen = solve_0(&input, 0, false);
-        let co2 = solve_0(&input, 0, true);
-        let oxygen = u32::from_str_radix(oxygen, 2).unwrap();
-        let co2 = u32::from_str_radix(co2, 2).unwrap();
-        //println!("{} {}", oxygen, co2);
-        /*let num =
-            String::from_utf8_lossy(&counts.map(|x| if x > 0 { b'0' } else { b'1' })).to_string();
-        let num = u8::from_str_radix(&num, 2).unwrap();*/
-        (oxygen as u32 * co2 as u32, 0)
-        //(0, 0)
-        //(num * (!num & 0b0001111), 0)
-        //(num * (!num & 0b0000111111111111) as u32, 0)
-    }
-}
+//fn solve(input: crate::solutions::Input) -> (Self::Answer, Self::Answer) {
+r#macro::solution!(2021, 3, u32, {
+    let input = input.split('\n').collect::<Vec<_>>();
+    let oxygen = solve_0(&input, 0, false);
+    let co2 = solve_0(&input, 0, true);
+    let oxygen = u32::from_str_radix(oxygen, 2).unwrap();
+    let co2 = u32::from_str_radix(co2, 2).unwrap();
+    //println!("{} {}", oxygen, co2);
+    /*let num =
+        String::from_utf8_lossy(&counts.map(|x| if x > 0 { b'0' } else { b'1' })).to_string();
+    let num = u8::from_str_radix(&num, 2).unwrap();*/
+    (oxygen as u32 * co2 as u32, 0)
+    //(0, 0)
+    //(num * (!num & 0b0001111), 0)
+    //(num * (!num & 0b0000111111111111) as u32, 0)
+});
+//}

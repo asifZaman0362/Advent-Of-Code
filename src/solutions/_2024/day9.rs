@@ -1,6 +1,6 @@
 use crate::solutions::*;
 
-pub struct Solver;
+//pub struct Solver;
 
 struct Region {
     idx: u32,
@@ -67,32 +67,33 @@ fn rearr_blocks(mut block_data: Vec<u32>, file_sizes: Vec<u8>, mut spaces: Vec<R
     checksum
 }
 
-impl Solution for Solver {
-    type Answer = usize;
-    fn solve(input: Input) -> (Self::Answer, Self::Answer) {
-        let mut block_data: Vec<u32> = Vec::with_capacity(1 << 32);
-        let mut spaces = Vec::<Region>::with_capacity(1024);
-        let mut file_sizes = Vec::<u8>::with_capacity(1024);
-        file_sizes.push(0);
-        let mut blocks = 0;
-        for (idx, (file, space)) in input[0]
-            .as_bytes()
-            .chunks(2)
-            .map(|entry| (entry[0] - 48, entry.get(1).map_or(0, |x| x - 48)))
-            .enumerate()
-        {
-            (0..file).for_each(|_| block_data.push((idx + 1) as u32));
-            (0..space).for_each(|_| block_data.push(0));
-            blocks += file as u32;
-            spaces.push(Region {
-                idx: blocks,
-                size: space,
-            });
-            blocks += space as u32;
-            file_sizes.push(file);
-        }
-        let part1 = frag(block_data.clone());
-        let part2 = rearr_blocks(block_data, file_sizes, spaces);
-        (part1, part2)
+/*impl Solution for Solver {
+type Answer = usize;
+fn solve(input: Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2024, 9, usize, {
+    let mut block_data: Vec<u32> = Vec::with_capacity(1 << 32);
+    let mut spaces = Vec::<Region>::with_capacity(1024);
+    let mut file_sizes = Vec::<u8>::with_capacity(1024);
+    file_sizes.push(0);
+    let input = input.lines().collect::<Vec<_>>();
+    let mut blocks = 0;
+    for (idx, (file, space)) in input[0]
+        .as_bytes()
+        .chunks(2)
+        .map(|entry| (entry[0] - 48, entry.get(1).map_or(0, |x| x - 48)))
+        .enumerate()
+    {
+        (0..file).for_each(|_| block_data.push((idx + 1) as u32));
+        (0..space).for_each(|_| block_data.push(0));
+        blocks += file as u32;
+        spaces.push(Region {
+            idx: blocks,
+            size: space,
+        });
+        blocks += space as u32;
+        file_sizes.push(file);
     }
-}
+    let part1 = frag(block_data.clone());
+    let part2 = rearr_blocks(block_data, file_sizes, spaces);
+    (part1, part2)
+});

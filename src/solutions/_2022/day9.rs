@@ -1,7 +1,7 @@
 use crate::solutions::*;
 use std::collections::HashSet;
 
-pub struct Solver;
+//pub struct Solver;
 
 type Pos = (i32, i32);
 
@@ -72,7 +72,7 @@ fn solve0(input: Input) -> usize {
     let mut tail = [(0, 0); 1];
     let mut tail_pos = HashSet::<(i32, i32)>::new();
     tail_pos.insert((0, 0));
-    for motion in input {
+    for motion in input.lines() {
         make_motion(motion, &mut head, &mut tail, &mut tail_pos);
     }
     //dbg!(&tail_pos);
@@ -95,7 +95,7 @@ fn solve1(input: Input) -> usize {
     let mut tail = [(0, 0); 9];
     let mut tail_pos = HashSet::<(i32, i32)>::new();
     tail_pos.insert((0, 0));
-    for motion in input {
+    for motion in input.lines() {
         make_motion(motion, &mut head, &mut tail, &mut tail_pos);
     }
     //dbg!(&tail_pos);
@@ -113,9 +113,10 @@ fn solve1(input: Input) -> usize {
     tail_pos.len()
 }
 
-impl Solution for Solver {
+/*impl Solution for Solver {
     type Answer = usize;
     fn solve(input: Input) -> (Self::Answer, Self::Answer) {
         (solve0(input), solve1(input))
     }
-}
+}*/
+r#macro::solution!(2022, 9, usize, (solve0(input), solve1(input)));

@@ -1,7 +1,7 @@
-use crate::Solution;
+use crate::solutions::*;
 use std::collections::{HashMap, HashSet};
 
-pub struct Solver;
+//pub struct Solver;
 
 fn solve0(input: &crate::solutions::Input) -> HashMap<String, u32> {
     let mut stack = vec!["root"];
@@ -10,7 +10,7 @@ fn solve0(input: &crate::solutions::Input) -> HashMap<String, u32> {
     sizes.insert(String::from("root"), 0);
     files.insert(String::from("root"), HashSet::new());
     let mut cwd = String::from("root");
-    for line in input.iter() {
+    for line in input.split('\n') {
         if line.starts_with("$") {
             let mut iter = line[2..].split(" ");
             if let Some("cd") = iter.next() {
@@ -62,14 +62,14 @@ fn solve0(input: &crate::solutions::Input) -> HashMap<String, u32> {
 
 //fn solve1(input: &crate::solutions::Input) -> u32 {}
 
-impl Solution for Solver {
-    type Answer = u32;
-    fn solve(input: crate::solutions::Input) -> (Self::Answer, Self::Answer) {
-        let values = solve0(&input);
-        let target = 30_000_000 - (70_000_000 - values.get("root").unwrap());
-        let first = values.values().filter(|&&x| x <= 100_000).sum();
-        let second = values.values().filter(|&&x| x >= target).min().unwrap();
-        //(solve0(&input), solve1(&input))
-        (first, *second)
-    }
-}
+/*impl Solution for Solver {
+type Answer = u32;
+fn solve(input: crate::solutions::Input) -> (Self::Answer, Self::Answer) {*/
+r#macro::solution!(2022, 7, u32, {
+    let values = solve0(&input);
+    let target = 30_000_000 - (70_000_000 - values.get("root").unwrap());
+    let first = values.values().filter(|&&x| x <= 100_000).sum();
+    let second = values.values().filter(|&&x| x >= target).min().unwrap();
+    //(solve0(&input), solve1(&input))
+    (first, *second)
+});

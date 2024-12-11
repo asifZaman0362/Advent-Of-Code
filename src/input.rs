@@ -5,18 +5,18 @@ struct Cookie {
     session: String,
 }
 
-pub fn read_input(test: bool, year: u16, day: u8) -> anyhow::Result<Vec<String>> {
-    let buf = if test {
+pub fn read_input(test: bool, year: u16, day: u8) -> anyhow::Result<String> {
+    if test {
         let mut buf = String::new();
         let mut file = std::fs::File::open("test.txt")?;
         file.read_to_string(&mut buf)?;
-        buf
+        Ok(buf)
     } else {
         match std::fs::File::open(format!("{year}_{day}_input.txt")) {
             Ok(mut file) => {
                 let mut buf = String::new();
                 file.read_to_string(&mut buf)?;
-                buf
+                Ok(buf)
             }
             Err(e) => {
                 if e.kind() == std::io::ErrorKind::NotFound {
@@ -35,16 +35,11 @@ pub fn read_input(test: bool, year: u16, day: u8) -> anyhow::Result<Vec<String>>
                         .text()?;
                     let mut file = std::fs::File::create(format!("{year}_{day}_input.txt"))?;
                     file.write_all(buf.as_bytes())?;
-                    buf
+                    Ok(buf)
                 } else {
                     panic!("{}", e)
                 }
             }
         }
-    };
-    Ok(buf
-        .trim_end()
-        .split('\n')
-        .map(|x| x.to_owned())
-        .collect::<Vec<_>>())
+    }
 }
