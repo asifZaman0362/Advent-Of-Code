@@ -33,7 +33,7 @@ impl Number for i16 {}
 impl Number for u8 {}
 impl Number for i8 {}
 
-#[derive(Eq, PartialEq)]
+#[derive(Eq, PartialEq, std::hash::Hash, Debug)]
 pub struct Vec2<T: Number> {
     x: T,
     y: T,
@@ -152,31 +152,31 @@ pub trait Solution {
 }
 
 pub fn u64_p(x: &str) -> u64 {
-    x.parse::<u64>().unwrap()
+    x.parse::<u64>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn usize_p(x: &str) -> usize {
-    x.parse::<usize>().unwrap()
+    x.parse::<usize>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn i64_p(x: &str) -> i64 {
-    x.parse::<i64>().unwrap()
+    x.parse::<i64>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn f64_p(x: &str) -> f64 {
-    x.parse::<f64>().unwrap()
+    x.parse::<f64>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn u32_p(x: &str) -> u32 {
-    x.parse::<u32>().unwrap()
+    x.parse::<u32>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn i32_p(x: &str) -> i32 {
-    x.parse::<i32>().unwrap()
+    x.parse::<i32>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn f32_p(x: &str) -> f32 {
-    x.parse::<f32>().unwrap()
+    x.parse::<f32>().expect(format!("invalid {x}").as_str())
 }
 
 pub fn sorted<T: std::cmp::Ord>(vec: &mut Vec<T>) -> impl std::iter::Iterator<Item = &mut T> {
