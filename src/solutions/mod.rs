@@ -95,6 +95,38 @@ where
     }
 }
 
+impl std::ops::AddAssign<Vec2<isize>> for Vec2<usize> {
+    fn add_assign(&mut self, rhs: Vec2<isize>) {
+        if rhs.x < 0 {
+            self.x = self.x.wrapping_sub(rhs.x.abs() as usize);
+        } else {
+            self.x += rhs.x as usize;
+        }
+        if rhs.y < 0 {
+            self.y = self.y.wrapping_sub(rhs.y.abs() as usize);
+        } else {
+            self.y += rhs.y as usize;
+        }
+    }
+}
+
+impl std::ops::Add<Vec2<isize>> for Vec2<usize> {
+    type Output = Vec2<usize>;
+    fn add(self, rhs: Vec2<isize>) -> Self::Output {
+        let x = if rhs.x < 0 {
+            self.x.wrapping_sub(rhs.x.abs() as usize)
+        } else {
+            self.x + rhs.x as usize
+        };
+        let y = if rhs.y < 0 {
+            self.y.wrapping_sub(rhs.y.abs() as usize)
+        } else {
+            self.y + rhs.y as usize
+        };
+        (x, y).into()
+    }
+}
+
 impl<T: Number> std::ops::SubAssign<Vec2<T>> for Vec2<T>
 where
     <T as std::ops::Sub>::Output: Number,
@@ -238,6 +270,7 @@ pub fn asst<T: PartialEq + std::fmt::Debug>(a: T, b: T) {
 }
 
 pub mod _2015;
+pub mod _2016;
 pub mod _2020;
 pub mod _2021;
 pub mod _2022;

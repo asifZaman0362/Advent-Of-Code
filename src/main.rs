@@ -5,7 +5,7 @@ use std::collections::HashMap;
 mod solutions;
 
 use solutions::Solution;
-type Solver = solutions::_2024::day12::Solver;
+type Solver = solutions::_2024::day14::Solver;
 
 fn main() -> anyhow::Result<()> {
     let begin = std::time::Instant::now();
