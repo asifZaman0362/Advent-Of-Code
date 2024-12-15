@@ -18,6 +18,8 @@ pub trait Number:
     + std::cmp::PartialOrd
     + std::cmp::PartialEq
     + Sized
+    + Clone
+    + Copy
 {
 }
 
@@ -33,7 +35,7 @@ impl Number for i16 {}
 impl Number for u8 {}
 impl Number for i8 {}
 
-#[derive(Eq, PartialEq, std::hash::Hash, Debug)]
+#[derive(Eq, PartialEq, std::hash::Hash, Debug, Clone, Copy)]
 pub struct Vec2<T: Number> {
     x: T,
     y: T,
@@ -113,6 +115,23 @@ impl std::ops::AddAssign<Vec2<isize>> for Vec2<usize> {
 impl std::ops::Add<Vec2<isize>> for Vec2<usize> {
     type Output = Vec2<usize>;
     fn add(self, rhs: Vec2<isize>) -> Self::Output {
+        let x = if rhs.x < 0 {
+            self.x.wrapping_sub(rhs.x.abs() as usize)
+        } else {
+            self.x + rhs.x as usize
+        };
+        let y = if rhs.y < 0 {
+            self.y.wrapping_sub(rhs.y.abs() as usize)
+        } else {
+            self.y + rhs.y as usize
+        };
+        (x, y).into()
+    }
+}
+
+impl std::ops::Add<&Vec2<isize>> for &Vec2<usize> {
+    type Output = Vec2<usize>;
+    fn add(self, rhs: &Vec2<isize>) -> Self::Output {
         let x = if rhs.x < 0 {
             self.x.wrapping_sub(rhs.x.abs() as usize)
         } else {
